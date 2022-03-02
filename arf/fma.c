@@ -12,7 +12,7 @@
 #include "arf.h"
 
 int
-arf_fma(arf_ptr res, arf_srcptr x, arf_srcptr y, arf_srcptr z, slong prec, arf_rnd_t rnd)
+arf_fma(arf_t res, arf_srcptr x, arf_srcptr y, arf_srcptr z, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn, zn, tn, alloc;
     mp_srcptr xptr, yptr, zptr;

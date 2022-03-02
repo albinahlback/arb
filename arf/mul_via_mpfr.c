@@ -12,7 +12,7 @@
 #include "arf.h"
 
 int
-arf_mul_via_mpfr(arf_ptr z, arf_srcptr x, arf_srcptr y,
+arf_mul_via_mpfr(arf_t z, arf_srcptr x, arf_srcptr y,
         slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn, zn, val;

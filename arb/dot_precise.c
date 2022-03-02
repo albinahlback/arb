@@ -16,7 +16,7 @@ arb_dot_precise(arb_t res, const arb_t initial, int subtract,
     arb_srcptr x, slong xstep, arb_srcptr y, slong ystep, slong len, slong prec)
 {
     arf_ptr A, B;
-    arf_t t, u;
+    arf_ptr t, u;
     slong i;
     int inexact;
 

@@ -48,7 +48,7 @@ arf_add_special(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd
 }
 
 int
-arf_add(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_add(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn;
     mp_srcptr xptr, yptr;
@@ -76,7 +76,7 @@ arf_add(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_add_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
+arf_add_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn;
     mp_srcptr xptr, yptr;
@@ -124,7 +124,7 @@ arf_add_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_add_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
+arf_add_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn;
     mp_srcptr xptr, yptr;
@@ -168,7 +168,7 @@ arf_add_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_add_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_add_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn;
     mp_srcptr xptr, yptr;
@@ -208,7 +208,7 @@ arf_add_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_add_fmpz_2exp(arf_ptr z, arf_srcptr x, const fmpz_t y, const fmpz_t exp, slong prec, arf_rnd_t rnd)
+arf_add_fmpz_2exp(arf_t z, arf_srcptr x, const fmpz_t y, const fmpz_t exp, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn;
     mp_srcptr xptr, yptr;

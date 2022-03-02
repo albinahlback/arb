@@ -908,9 +908,9 @@ void arf_mul_special(arf_t z, const arf_t x, const arf_t y);
 
 int arf_mul_via_mpfr(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd);
 
-int arf_mul_rnd_any(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_mul_rnd_any(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
 
-int arf_mul_rnd_down(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec);
+int arf_mul_rnd_down(arf_t z, arf_srcptr x, arf_srcptr y, slong prec);
 
 #define arf_mul(z, x, y, prec, rnd)              \
     ((rnd == FMPR_RND_DOWN)                      \
@@ -936,7 +936,7 @@ arf_neg_mul(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_mul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
+arf_mul_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_ui(t, y); /* no need to free */
@@ -944,17 +944,17 @@ arf_mul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_mul_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
+arf_mul_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_si(t, y); /* no need to free */
     return arf_mul(z, x, t, prec, rnd);
 }
 
-int arf_mul_mpz(arf_ptr z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
+int arf_mul_mpz(arf_t z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_mul_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_mul_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     if (!COEFF_IS_MPZ(*y))
         return arf_mul_si(z, x, *y, prec, rnd);
@@ -1004,22 +1004,22 @@ int _arf_add_mpn(arf_t z, mp_srcptr xp, mp_size_t xn, int xsgnbit,
     const fmpz_t xexp, mp_srcptr yp, mp_size_t yn, int ysgnbit,
     flint_bitcnt_t shift, slong prec, arf_rnd_t rnd);
 
-int arf_add(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
-int arf_add_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd);
-int arf_add_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd);
-int arf_add_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd);
+int arf_add(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_add_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd);
+int arf_add_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd);
+int arf_add_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd);
 
-int arf_add_fmpz_2exp(arf_ptr z, arf_srcptr x, const fmpz_t y, const fmpz_t exp, slong prec, arf_rnd_t rnd);
+int arf_add_fmpz_2exp(arf_t z, arf_srcptr x, const fmpz_t y, const fmpz_t exp, slong prec, arf_rnd_t rnd);
 
-int arf_sub(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
-int arf_sub_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd);
-int arf_sub_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd);
-int arf_sub_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd);
+int arf_sub(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_sub_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd);
+int arf_sub_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd);
+int arf_sub_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd);
 
-int arf_addmul(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_addmul(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_addmul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
+arf_addmul_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_ui(t, y); /* no need to free */
@@ -1027,17 +1027,17 @@ arf_addmul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_addmul_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
+arf_addmul_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_si(t, y); /* no need to free */
     return arf_addmul(z, x, t, prec, rnd);
 }
 
-int arf_addmul_mpz(arf_ptr z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
+int arf_addmul_mpz(arf_t z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_addmul_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_addmul_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     if (!COEFF_IS_MPZ(*y))
         return arf_addmul_si(z, x, *y, prec, rnd);
@@ -1045,10 +1045,10 @@ arf_addmul_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t r
         return arf_addmul_mpz(z, x, COEFF_TO_PTR(*y), prec, rnd);
 }
 
-int arf_submul(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_submul(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_submul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
+arf_submul_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_ui(t, y); /* no need to free */
@@ -1056,17 +1056,17 @@ arf_submul_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_submul_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
+arf_submul_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_si(t, y); /* no need to free */
     return arf_submul(z, x, t, prec, rnd);
 }
 
-int arf_submul_mpz(arf_ptr z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
+int arf_submul_mpz(arf_t z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_submul_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_submul_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     if (!COEFF_IS_MPZ(*y))
         return arf_submul_si(z, x, *y, prec, rnd);
@@ -1074,14 +1074,14 @@ arf_submul_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t r
         return arf_submul_mpz(z, x, COEFF_TO_PTR(*y), prec, rnd);
 }
 
-int arf_fma(arf_ptr res, arf_srcptr x, arf_srcptr y, arf_srcptr z, slong prec, arf_rnd_t rnd);
+int arf_fma(arf_t res, arf_srcptr x, arf_srcptr y, arf_srcptr z, slong prec, arf_rnd_t rnd);
 
 int arf_sosq(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd);
 
-int arf_div(arf_ptr z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
+int arf_div(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd);
 
 ARF_INLINE int
-arf_div_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
+arf_div_ui(arf_t z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_ui(t, y); /* no need to free */
@@ -1089,7 +1089,7 @@ arf_div_ui(arf_ptr z, arf_srcptr x, ulong y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_ui_div(arf_ptr z, ulong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_ui_div(arf_t z, ulong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_ui(t, x); /* no need to free */
@@ -1097,7 +1097,7 @@ arf_ui_div(arf_ptr z, ulong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_div_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
+arf_div_si(arf_t z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_si(t, y); /* no need to free */
@@ -1105,7 +1105,7 @@ arf_div_si(arf_ptr z, arf_srcptr x, slong y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_si_div(arf_ptr z, slong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_si_div(arf_t z, slong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     arf_init_set_si(t, x); /* no need to free */
@@ -1113,7 +1113,7 @@ arf_si_div(arf_ptr z, slong x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_div_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_div_fmpz(arf_t z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     int r;
@@ -1125,7 +1125,7 @@ arf_div_fmpz(arf_ptr z, arf_srcptr x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_fmpz_div(arf_ptr z, const fmpz_t x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_fmpz_div(arf_t z, const fmpz_t x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 {
     arf_t t;
     int r;
@@ -1137,7 +1137,7 @@ arf_fmpz_div(arf_ptr z, const fmpz_t x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 }
 
 ARF_INLINE int
-arf_fmpz_div_fmpz(arf_ptr z, const fmpz_t x, const fmpz_t y, slong prec, arf_rnd_t rnd)
+arf_fmpz_div_fmpz(arf_t z, const fmpz_t x, const fmpz_t y, slong prec, arf_rnd_t rnd)
 {
     arf_t t, u;
     int r;
@@ -1151,13 +1151,13 @@ arf_fmpz_div_fmpz(arf_ptr z, const fmpz_t x, const fmpz_t y, slong prec, arf_rnd
     return r;
 }
 
-int arf_sqrt(arf_ptr z, arf_srcptr x, slong prec, arf_rnd_t rnd);
+int arf_sqrt(arf_t z, arf_srcptr x, slong prec, arf_rnd_t rnd);
 
 int arf_sqrt_ui(arf_t z, ulong x, slong prec, arf_rnd_t rnd);
 
 int arf_sqrt_fmpz(arf_t z, const fmpz_t x, slong prec, arf_rnd_t rnd);
 
-int arf_rsqrt(arf_ptr z, arf_srcptr x, slong prec, arf_rnd_t rnd);
+int arf_rsqrt(arf_t z, arf_srcptr x, slong prec, arf_rnd_t rnd);
 
 int arf_root(arf_t z, const arf_t x, ulong k, slong prec, arf_rnd_t rnd);
 

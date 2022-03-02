@@ -772,7 +772,7 @@ _arb_vec_scalar_mul_fmpz(arb_ptr res, arb_srcptr vec,
     slong len, const fmpz_t c, slong prec)
 {
     slong i;
-    arf_t t;
+    arf_ptr t;
     arf_init(t);
     arf_set_fmpz(t, c);
     for (i = 0; i < len; i++)

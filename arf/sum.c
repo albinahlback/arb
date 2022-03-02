@@ -42,7 +42,7 @@ int _arf_are_close(const arf_t x, const arf_t y, slong prec)
 int
 _arf_add_eps(arf_t s, const arf_t x, int sgn, slong prec, arf_rnd_t rnd)
 {
-    arf_t t;
+    arf_ptr t;
     slong bits;
 
     bits = arf_bits(x);

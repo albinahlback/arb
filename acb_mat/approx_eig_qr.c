@@ -309,7 +309,7 @@ void
 acb_mat_approx_hessenberg_reduce_0(acb_mat_t A, acb_ptr T, slong prec)
 {
     slong i, j, k, n;
-    arf_t scale, scale_inv, tt, H, G, f;
+    arf_ptr scale, scale_inv, tt, H, G, f;
     acb_ptr V1, V2;
     acb_t ff, GG, TT;
     acb_t F;

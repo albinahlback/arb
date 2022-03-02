@@ -23,7 +23,7 @@ int main()
 
     for (iter = 0; iter < 10000 * arb_test_multiplier(); iter++)
     {
-        arf_t x, y;
+        arf_ptr x, y;
         int result;
 
         arf_init(x);
@@ -50,7 +50,7 @@ int main()
         }
         else
         {
-            arf_t s, t[3];
+            arf_ptr s, t[3];
 
             /* check floor(x) - x + 1 > 0 */
 
