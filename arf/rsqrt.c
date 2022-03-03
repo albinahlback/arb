@@ -12,7 +12,7 @@
 #include "arf.h"
 
 int
-arf_rsqrt(arf_t z, arf_srcptr x, slong prec, arf_rnd_t rnd)
+arf_rsqrt(arf_t z, const arf_t x, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, zn, val;
     mp_srcptr xptr;

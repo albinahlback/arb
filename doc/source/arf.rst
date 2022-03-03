@@ -641,7 +641,7 @@ Addition and multiplication
 Summation
 -------------------------------------------------------------------------------
 
-.. function:: int arf_sum(arf_t res, arf_srcptr terms, slong len, slong prec, arf_rnd_t rnd)
+.. function:: int arf_sum(arf_t res, const arf_t terms, slong len, slong prec, arf_rnd_t rnd)
 
     Sets *res* to the sum of the array *terms* of length *len*, rounded to
     *prec* bits in the direction specified by *rnd*. The sum is computed as if

@@ -12,7 +12,7 @@
 #include "arf.h"
 
 int
-arf_addmul(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_addmul(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn, zn, tn, alloc;
     mp_srcptr xptr, yptr, zptr;
@@ -77,7 +77,7 @@ arf_addmul(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_addmul_mpz(arf_t z, arf_srcptr x, const mpz_t y, slong prec, arf_rnd_t rnd)
+arf_addmul_mpz(arf_t z, const arf_t x, const mpz_t y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn, zn, tn, alloc;
     mp_srcptr xptr, yptr, zptr;

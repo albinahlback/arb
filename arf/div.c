@@ -39,7 +39,7 @@ arf_div_special(arf_t z, const arf_t x, const arf_t y)
 }
 
 int
-arf_div(arf_t z, arf_srcptr x, arf_srcptr y, slong prec, arf_rnd_t rnd)
+arf_div(arf_t z, const arf_t x, const arf_t y, slong prec, arf_rnd_t rnd)
 {
     mp_size_t xn, yn, zn, sn, tn, alloc;
     mp_srcptr xptr, yptr;

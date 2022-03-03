@@ -66,7 +66,7 @@ _arf_add_eps(arf_t s, const arf_t x, int sgn, slong prec, arf_rnd_t rnd)
 }
 
 int
-arf_sum(arf_t s, arf_srcptr terms, slong len, slong prec, arf_rnd_t rnd)
+arf_sum(arf_t s, const arf_t terms, slong len, slong prec, arf_rnd_t rnd)
 {
     arf_ptr blocks;
     slong i, j, used;

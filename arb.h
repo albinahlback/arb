@@ -817,7 +817,7 @@ _arb_vec_bits(arb_srcptr x, slong len)
 void _arb_vec_set_powers(arb_ptr xs, const arb_t x, slong len, slong prec);
 
 ARB_INLINE void
-_arb_vec_add_error_arf_vec(arb_ptr res, arf_srcptr err, slong len)
+_arb_vec_add_error_arf_vec(arb_ptr res, const arf_t err, slong len)
 {
     slong i;
     for (i = 0; i < len; i++)

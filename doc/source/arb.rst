@@ -1870,7 +1870,7 @@ Vector functions
 
     Sets *xs* to the powers `1, x, x^2, \ldots, x^{len-1}`.
 
-.. function:: void _arb_vec_add_error_arf_vec(arb_ptr res, arf_srcptr err, slong len)
+.. function:: void _arb_vec_add_error_arf_vec(arb_ptr res, const arf_t err, slong len)
 
 .. function:: void _arb_vec_add_error_mag_vec(arb_ptr res, mag_srcptr err, slong len)
 

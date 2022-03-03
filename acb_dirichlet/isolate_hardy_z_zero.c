@@ -1241,7 +1241,7 @@ gram_index(fmpz_t res, const arf_t t)
  * and all entries must be greater than 10.
  */
 static slong
-_exact_zeta_multi_nzeros(fmpz *res, arf_srcptr points, slong len)
+_exact_zeta_multi_nzeros(fmpz *res, const arf_t points, slong len)
 {
     zz_node_ptr U, V, u, v, p;
     arb_t x;
@@ -1336,7 +1336,7 @@ _exact_zeta_multi_nzeros(fmpz *res, arf_srcptr points, slong len)
  * Compute nzeros for len values of t. The array p must be in increasing order.
  */
 static void
-exact_zeta_multi_nzeros(fmpz *res, arf_srcptr p, slong len)
+exact_zeta_multi_nzeros(fmpz *res, const arf_t p, slong len)
 {
     slong i, c;
     arf_srcptr q;

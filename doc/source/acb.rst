@@ -1221,7 +1221,7 @@ Vector functions
 
     In order to avoid precision loss, this function does not simply compute powers of a primitive root.
 
-.. function:: void _acb_vec_add_error_arf_vec(acb_ptr res, arf_srcptr err, slong len)
+.. function:: void _acb_vec_add_error_arf_vec(acb_ptr res, const arf_t err, slong len)
 
 .. function:: void _acb_vec_add_error_mag_vec(acb_ptr res, mag_srcptr err, slong len)
 

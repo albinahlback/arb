@@ -1093,7 +1093,7 @@ _acb_vec_bits(acb_srcptr vec, slong len)
 void _acb_vec_set_powers(acb_ptr xs, const acb_t x, slong len, slong prec);
 
 ACB_INLINE void
-_acb_vec_add_error_arf_vec(acb_ptr res, arf_srcptr err, slong len)
+_acb_vec_add_error_arf_vec(acb_ptr res, const arf_t err, slong len)
 {
     slong i;
     for (i = 0; i < len; i++)
