@@ -4,112 +4,155 @@
 ===============================================================================
 
 A variable of type :type:`arf_t` holds an arbitrary-precision binary
-floating-point number: that is, a rational number of the form
-`x \cdot 2^y` where `x, y \in \mathbb{Z}` and `x` is odd,
-or one of the special values zero, plus infinity, minus infinity,
-or NaN (not-a-number).
-There is currently no support for negative zero, unsigned infinity,
-or a NaN with a payload.
+floating-point number: that is, a rational number of the form `x \cdot 2^y`
+where `x, y \in \mathbb{Z}` and `x` is odd, or one of the special values zero,
+plus infinity, minus infinity, or NaN (not-a-number). There is currently no
+support for negative zero, unsigned infinity, or a NaN with a payload.
 
-The *exponent* of a finite and nonzero floating-point number can be
-defined in different
-ways: for example, as the component *y* above, or as the unique
-integer *e* such that
-`x \cdot 2^y = m \cdot 2^e` where `0.5 \le |m| < 1`.
-The internal representation of an :type:`arf_t` stores the
-exponent in the latter format.
+The *exponent* of a finite and nonzero floating-point number can be defined in
+different ways: for example, as the component *y* above, or as the unique
+integer *e* such that `x \cdot 2^y = m \cdot 2^e` where `0.5 \le |m| < 1`. The
+internal representation of an :type:`arf_t` stores the exponent in the latter
+format.
 
 Except where otherwise noted, functions have the following semantics:
 
 * Functions taking *prec* and *rnd* parameters at the end of the argument list
-  and returning an ``int`` flag round the result in the output variable
-  to *prec* bits in the direction specified by *rnd*. The return flag
-  is 0 if the result is exact
-  (not rounded) and 1 if the result is inexact (rounded).
+  and returning an ``int`` flag round the result in the output variable to
+  *prec* bits in the direction specified by *rnd*. The return flag is `0` if the
+  result is exact (not rounded) and `1` if the result is inexact (rounded).
   Correct rounding is guaranteed: the result is the floating-point number
-  obtained by viewing the inputs as exact numbers, in principle carrying out
-  the mathematical operation exactly, and rounding the resulting real number
-  to the nearest representable floating-point number whose mantissa has at
-  most the specified number of bits, in the specified direction of rounding.
-  In particular, the error is at most 1 ulp with directed rounding modes
-  and 0.5 ulp when rounding to nearest.
+  obtained by viewing the inputs as exact numbers, in principle carrying out the
+  mathematical operation exactly, and rounding the resulting real number to the
+  nearest representable floating-point number whose mantissa has at most the
+  specified number of bits, in the specified direction of rounding. In
+  particular, the error is at most `1\;\mathrm{ulp}` with directed rounding
+  modes and `0.5\;\mathrm{ulp}` when rounding to nearest.
 
 * Other functions perform the operation exactly.
 
 Since exponents are bignums, overflow or underflow cannot occur.
 
-Types, macros and constants
+
+
+Types
 -------------------------------------------------------------------------------
+
+.. type:: mantissa_noptr_struct
+
+   Mantissa allocated on the stack with :macro:`ARF_NOPTR_LIMBS` number of
+   limbs. This is only used when the number of limbs are small.
+
+.. type:: mantissa_ptr_struct
+
+   Mantissa allocated on the heap that can contain an arbitrary number of limbs.
+   This is used when a larger amount of limbs are used.
+
+.. union:: mantissa_struct
+
+   The union of possible mantissas.
+
+      .. member:: mantissa_noptr_struct noptr
+
+      .. member:: mantissa_ptr_struct ptr
 
 .. type:: arf_struct
 
+   The struct representing an arbitrary-precision binary floating-point number
+   containing the following fields:
+
+      .. var:: fmpz exp
+
+         The exponent of the floating-point number. If an :type:`arf_struct`
+         represents a special number, the exponent encodes what type of special
+         number it is. See :macro:`ARF_EXP_ZERO`, :macro:`ARF_EXP_NAN`,
+         :macro:`ARF_EXP_NEG_INF` and :macro:`ARF_EXP_POS_INF` to see what
+         numbers are used to encode this.
+
+      .. var:: mp_size_t size
+
+         The allocation size of the mantissa. If and only if the allocation size
+         is zero it represents a special number.
+
+      .. var:: mantissa_struct d
+
+         The mantissa. Although :var:`size` keeps track of its allocation size,
+         all of its limbs may not be used.
+
 .. type:: arf_t
 
-    An :type:`arf_struct` contains four words: an :type:`fmpz` exponent (*exp*),
-    a *size* field tracking the number of limbs used (one bit of this
-    field is also used for the sign of the number), and two more words.
-    The last two words hold the value directly if there are at most two limbs,
-    and otherwise contain one *alloc* field (tracking the total number of
-    allocated limbs, not all of which might be used) and a pointer to
-    the actual limbs.
-    Thus, up to 128 bits on a 64-bit machine and 64 bits on a 32-bit machine,
-    no space outside of the :type:`arf_struct` is used.
-
-    An :type:`arf_t` is defined as an array of length one of type
-    :type:`arf_struct`, permitting an :type:`arf_t` to be passed by reference.
+   Defined as an array of length one of type :type:`arf_struct`, permitting an
+   :type:`arf_t` to be passed by reference.
 
 .. type:: arf_rnd_t
 
-    Specifies the rounding mode for the result of an approximate operation.
+   Specifies the rounding mode for the result of an approximate operation.
+
+
+Constants
+-------------------------------------------------------------------------------
+
+.. macro:: ARF_NOPTR_LIMBS
+
+   Number of limbs in a :type:`mantissa_noptr_struct`. Currently defined as
+   `2`.
+
+.. macro:: ARF_RESULT_EXACT
+
+.. macro:: ARF_RESULT_INEXACT
+
+   Return value of a floating-point operation specifying whether it was
+   performed exact or inexact.
 
 .. macro:: ARF_RND_DOWN
 
-    Specifies that the result of an operation should be rounded to the
-    nearest representable number in the direction towards zero.
+   Specifies that the result of an operation should be rounded to the nearest
+   representable number in the direction towards zero.
 
 .. macro:: ARF_RND_UP
 
-    Specifies that the result of an operation should be rounded to the
-    nearest representable number in the direction away from zero.
+   Specifies that the result of an operation should be rounded to the nearest
+   representable number in the direction away from zero.
 
 .. macro:: ARF_RND_FLOOR
 
-    Specifies that the result of an operation should be rounded to the
-    nearest representable number in the direction towards minus infinity.
+   Specifies that the result of an operation should be rounded to the nearest
+   representable number in the direction towards minus infinity.
 
 .. macro:: ARF_RND_CEIL
 
-    Specifies that the result of an operation should be rounded to the
-    nearest representable number in the direction towards plus infinity.
+   Specifies that the result of an operation should be rounded to the nearest
+   representable number in the direction towards plus infinity.
 
 .. macro:: ARF_RND_NEAR
 
-    Specifies that the result of an operation should be rounded to the
-    nearest representable number, rounding to even if there is a tie
-    between two values.
+   Specifies that the result of an operation should be rounded to the nearest
+   representable number, rounding to even if there is a tie between two values.
 
 .. macro:: ARF_PREC_EXACT
 
-    If passed as the precision parameter to a function, indicates that no
-    rounding is to be performed. **Warning**: use of this value is unsafe in
-    general. It must only be
-    passed as input under the following two conditions:
+   If passed as the precision parameter to a function, indicates that no
+   rounding is to be performed.
 
-    * The operation in question can inherently be viewed as an exact operation
-      in `\mathbb{Z}[\tfrac{1}{2}]` for all possible inputs, provided that
-      the precision is large enough. Examples include addition,
-      multiplication, conversion from integer types to arbitrary-precision
-      floating-point types, and evaluation of some integer-valued functions.
+   **Warning**: use of this value is unsafe in general. It must only be passed
+   as input under the following two conditions:
 
-    * The exact result of the operation will certainly fit in memory.
-      Note that, for example, adding two numbers whose exponents are far
-      apart can easily produce an exact result that is far too large to
-      store in memory.
+   * The operation in question can inherently be viewed as an exact operation in
+     `\mathbb{Z}[\tfrac{1}{2}]` for all possible inputs, provided that the
+     precision is large enough. Examples include addition, multiplication,
+     conversion from integer types to arbitrary-precision floating-point types,
+     and evaluation of some integer-valued functions.
 
-    The typical use case is to work with small integer values, double
-    precision constants, and the like. It is also useful when writing
-    test code. If in doubt, simply try with some convenient high precision
-    instead of using this special value, and check that the result is exact.
+   * The exact result of the operation will certainly fit in memory. Note that,
+     for example, adding two numbers whose exponents are far apart can easily
+     produce an exact result that is far too large to store in memory.
+
+   The typical use case is to work with small integer values, double precision
+   constants, and the like. It is also useful when writing test code. If in
+   doubt, simply try with some convenient high precision instead of using this
+   special value, and check that the result is exact.
+
+
 
 Memory management
 -------------------------------------------------------------------------------
