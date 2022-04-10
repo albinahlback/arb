@@ -3,6 +3,43 @@
 Technical conventions and potential issues
 ===============================================================================
 
+Technical lingo and jargon
+-------------------------------------------------------------------------------
+
+Throughout this documentation, we use some terms central to
+multi-precision computing.
+
+**Mantissa**
+   Also called *significand*, is the part of a floating-point representation
+   that consists of its significant bits. We define a floating-point
+   representation of a number `x` to be *normalized* whenever it is represented
+   on the form
+
+   .. math::
+         x
+      \;=\;
+         m \mspace{1mu} 2^{e}
+      \text{,}
+
+   where the mantissa `m` lies within `[1 / 2, 1)` and the exponent `e` is an integer.
+
+**Multi-precision arithmetic**
+   As opposed to fixed-precision arithmetic, where number only can be
+   represented correctly up to some degree (such as the type ``double`` where
+   its mantissa only can be represented by `53` bits), multi-precision
+   arithmetic does not restrict the amount of bits representing numbers.
+
+**Unit of least precision (ulp)**
+   The unit of least precision is the spacing between two consecutive
+   floating-point numbers. This depends what precision is used, but also how
+   large those numbers are.
+
+**Special number**
+   Throughout this documentation, we say that a floating-point number is a
+   special number if it is zero, NaN (not-a-number), positive infinity or
+   negative infinity.
+
+
 Integer types
 -------------------------------------------------------------------------------
 
@@ -68,23 +105,29 @@ internal representation of numbers (using limb arrays).
 
     A bit offset within an array of limbs (always nonnegative).
 
-Arb uses the following FLINT types for exact (integral and rational)
-arbitrary-size values. For details, refer to the FLINT documentation.
+Arb uses the following FLINT types and macros for exact (integral and rational)
+arbitrary-size values. For details, see the
+`FLINT documentation <https://flintlib.org/doc/>`_.
+
+.. macro:: COEFF_MIN
+.. macro:: COEFF_MAX
+
+   The minimum and maximum value of the inline representation of an
+   :type:`fmpz`.  Defined as `\pm (2^{62} - 1)` for 64-bit machines and
+   `\pm (2^{30} - 1)` for 32-bit machines.
 
 .. type:: fmpz
 
+   The FLINT multi-precision integer type, aliased to a :type:`slong`. When an
+   ``fmpz`` represents a number between :macro:`COEFF_MIN` and
+   :macro:`COEFF_MAX` it is equivalent to a :type:`slong`, while for larger
+   values it is identical to GMP's *mpz_t*. The switch between these
+   representation happens automatically.
+
 .. type:: fmpz_t
 
-    The FLINT multi-precision integer type uses an inline representation for small
-    integers, specifically when the absolute value is at most `2^{62}-1` (on
-    64-bit machines) or `2^{30}-1` (on 32-bit machines). It switches
-    automatically to a GMP integer for larger values.
-    The *fmpz_t* type is functionally identical to the GMP *mpz_t*
-    type, but faster for small values.
-
-    An :type:`fmpz_t` is defined as an array of length one of type
-    :type:`fmpz` (which is just an alias for :type:`slong`),
-    permitting an :type:`fmpz_t` to be passed by reference.
+    The array of length one of type :type:`fmpz`, permitting an :type:`fmpz_t`
+    to be passed by reference.
 
 .. type:: fmpq_t
 
